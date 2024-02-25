@@ -6,6 +6,41 @@
     <title>Document</title>
 </head>
 <body>
+
+<!-- Storing the information -->
+
+    <!-- 1.Using a variable -->
+    <h3 id="heading1"></h3>
+    <input id="name1" type="text" placeholder="Your name">
+    <button id="btn1">CLick to store info</button>
+
+    
+
+    <script>
+        const btn = document.querySelector("#btn1");
+        const heading = document.querySelector("#heading1");
+        const nameInput = document.querySelector("#name1");
+
+        btn1.onclick = () => {
+            // name.value method => to  get the input value from an input tag
+            name = nameInput.value;  
+
+            // heading.textContent => to get place information inside a tag
+            heading1.textContent = `Welcome ${name}`;
+        }
+    </script>
+
+    <!-- 2. Without a variable  -->
+    <h3 id="heading2"></h3>
+    <input id="name2" type="text" placeholder="Your name">
+    <button id="btn2">CLick to store info</button>
+
+    <script>
+        const newbtn = document.querySelector("#btn2");
+        const newnameInput = document.querySelector("#name2");
+        const newheading = document.querySelector("#heading2");
+    </script>
+
     
 </body>
 </html>
