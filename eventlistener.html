@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Listener</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
 </head>
-<body class="flex justify-center items-center h-screen">
+<body class="flex justify-center items-center h-screen bg-slate-300">
 
     <!-- change button text  -->
     <!-- <button id="btn">Log in</button>
@@ -34,17 +36,19 @@
 
    <div class=" flex flex-col items-center w-fit h-fit p-1 pt-2 pb-5 border-2 bg-black border-black rounded-lg">
       <div class="w-[320px] h-[568px] bg-gray-700 border-black rounded-lg">
-        <div class="h-[90%] w-full  rounded-t-lg">
-            <ul id="tasks" class="flex flex-col justify-center items-center pt-2">
+        <div class="h-[90%] w-full rounded-t-lg">
+            <div id="greeting" class="hidden w-full h-10 bg-green-500 text-lg text-black text-center font-semibold shadow-lg p-2 mb-2"></div>
+
+            <ul id="tasks" class="flex w-full max-h-[90%] overflow-y-scroll flex-col justify-center items-center pt-2">
                 <li id="todoItems" class="hidden w-[95%] max-h-fit text-black bg-purple-400 rounded-lg p-2 text-md font-medium shadow-gray-400 my-2"></li>
             </ul>
         </div>
 
-        <div class=" relative flex justify-center items-center h-[10%] w-full  rounded-b-lg shadow-lg">
+        <div class=" relative flex justify-center items-center h-[10%] w-full rounded-b-lg shadow-lg">
             <div class="flex justify-between items-center">
 
                 <!-- todo list text field  -->
-                <input id="newItem" class="hidden w-[80%] h-10 px-4 outline-none rounded-lg bg-black  text-white" type="text" placeholder="Create a new task">
+                <input id="newItem" class="hidden w-[80%] h-10 px-4 outline-none rounded-lg bg-black text-white" type="text" placeholder="Create a new task">
 
                 <!-- adding new to do list item button  -->
                 <button id="taskBtn" class="hidden p-2 h-10 w-10 bg-black rounded-xl shadow-lg">
@@ -65,6 +69,19 @@
     const addTask = document.querySelector("#taskBtn");
     const taskList = document.querySelector("#tasks");
     const createTaskBtn = document.querySelector("#createTaskBtn");
+    
+    
+
+    function greet() {
+        // prompt for taking username as input 
+        const name = prompt("Your name");
+        const greeting = document.querySelector("#greeting");
+        greeting.classList.remove('hidden');
+        greeting.textContent = `Hello ${name}, nice to see you!`;
+    }
+
+    createTaskBtn.addEventListener("click", greet);
+
 
     // on click the button text box appears and the button hides up 
     createTaskBtn.onclick = () => {
@@ -89,15 +106,35 @@
 
         // remove the hidden property of the  list container 
         newListItem.classList.remove('hidden');
-        newListItem.textContent = newItem.value;
+        if(newItem.value !== ""){
+            // input maximum 40 character 
+            if(newItem.value.length > 40) {
+                Swal.fire({
+                    title: 'Maximum character limit exceeds!',
+                    icon: 'warning',
+                    confirmButtonText: 'OK',
+                });
+            }
+            else{
+                newListItem.textContent = newItem.value;
+                // append the newly created todo items to the ul list 
+                taskList.appendChild(newListItem);
+            }   
+        }
+        else {
+            Swal.fire({
+                title: 'Please enter a task',
+                icon: 'warning',
+                confirmButtonText: 'OK',
+            });
+        }
 
-        // append the newly created todo items to the ul list 
-        taskList.appendChild(newListItem);
+        
 
         // after entering a task make the input field empty 
         newItem.value = "";
     }
-    
+
    </script>
 
 
